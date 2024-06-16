@@ -10,10 +10,67 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
+//Auggie - code for gradients based on BG number
+func gradientForValue(_ value: Int) -> LinearGradient {
+    switch value {
+    case ...54:
+        return LinearGradient(
+            gradient: Gradient(colors: [Color.red, Color.red]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    case 55...64:
+        return LinearGradient(
+            gradient: Gradient(colors: [Color.red, Color.red]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    case 65...79:
+        return LinearGradient(
+            gradient: Gradient(colors: [Color.green, Color.yellow]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    case 80...100:
+        return LinearGradient(
+            gradient: Gradient(colors: [Color.green, Color.green]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    case 101...119:
+        return LinearGradient(
+            gradient: Gradient(colors: [Color.green, Color.teal]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    case 120...140:
+        return LinearGradient(
+            gradient: Gradient(colors: [Color.teal, Color.blue]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    case 141...180:
+        return LinearGradient(
+            gradient: Gradient(colors: [Color.blue, Color.indigo]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    default:
+        return LinearGradient(
+            gradient: Gradient(colors: [Color.indigo, Color.purple]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+}
+
 struct XDripWidgetLiveActivity: Widget {
     
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: XDripWidgetAttributes.self) { context in
+            
+            let bgValue = Int(context.state.bgValueStringInUserChosenUnit) ?? 0
+            let gradient = gradientForValue(bgValue)
             
             if context.state.liveActivitySize == .minimal {
                 
@@ -21,7 +78,8 @@ struct XDripWidgetLiveActivity: Widget {
                 HStack(alignment: .center) {
                     Text("\(context.state.bgValueStringInUserChosenUnit) \(context.state.trendArrow())")
                         .font(.system(size: 35)).bold()
-                        .foregroundStyle(context.state.bgTextColor())
+                        //.foregroundStyle(context.state.bgTextColor())
+                        .foregroundStyle(gradient)
                         .minimumScaleFactor(0.1)
                         .lineLimit(1)
                     
@@ -42,13 +100,15 @@ struct XDripWidgetLiveActivity: Widget {
                     HStack(alignment: .firstTextBaseline, spacing: 4) {
                         Text(context.state.deltaChangeStringInUserChosenUnit())
                             .font(.title).fontWeight(.semibold)
-                            .foregroundStyle(context.state.deltaChangeTextColor())
+                            //.foregroundStyle(context.state.deltaChangeTextColor())
+                            .foregroundStyle(gradient)
                             .minimumScaleFactor(0.2)
                             .lineLimit(1)
                         
                         Text(context.state.bgUnitString)
                             .font(.title)
-                            .foregroundStyle(.colorTertiary)
+                            //.foregroundStyle(.colorTertiary)
+                            .foregroundStyle(gradient)
                             .minimumScaleFactor(0.2)
                             .lineLimit(1)
                     }
@@ -64,20 +124,23 @@ struct XDripWidgetLiveActivity: Widget {
                     VStack(spacing: 0) {
                         Text("\(context.state.bgValueStringInUserChosenUnit)\(context.state.trendArrow())")
                             .font(.system(size: 44)).bold()
-                            .foregroundStyle(context.state.bgTextColor())
+                            //.foregroundStyle(context.state.bgTextColor())
+                            .foregroundStyle(gradient)
                             .minimumScaleFactor(0.1)
                             .lineLimit(1)
                         
                         HStack(alignment: .firstTextBaseline, spacing: 4) {
                             Text(context.state.deltaChangeStringInUserChosenUnit())
                                 .font(.system(size: 20)).fontWeight(.semibold)
-                                .foregroundStyle(context.state.deltaChangeTextColor())
+                                //.foregroundStyle(context.state.deltaChangeTextColor())
+                                .foregroundStyle(gradient)
                                 .minimumScaleFactor(0.2)
                                 .lineLimit(1)
                             
                             Text(context.state.bgUnitString)
                                 .font(.system(size: 20))
-                                .foregroundStyle(.colorTertiary)
+                                //.foregroundStyle(.colorTertiary)
+                                .foregroundStyle(gradient)
                                 .minimumScaleFactor(0.2)
                                 .lineLimit(1)
                         }
@@ -115,7 +178,8 @@ struct XDripWidgetLiveActivity: Widget {
                         HStack(alignment: .center) {
                             Text("\(context.state.bgValueStringInUserChosenUnit) \(context.state.trendArrow())")
                                 .font(.system(size: 32)).fontWeight(.bold)
-                                .foregroundStyle(context.state.bgTextColor())
+                                //.foregroundStyle(context.state.bgTextColor())
+                                .foregroundStyle(gradient)
                                 .scaledToFill()
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
@@ -125,11 +189,13 @@ struct XDripWidgetLiveActivity: Widget {
                             HStack(alignment: .firstTextBaseline, spacing: 4) {
                                 Text(context.state.deltaChangeStringInUserChosenUnit())
                                     .font(.system(size: 28)).fontWeight(.semibold)
-                                    .foregroundStyle(context.state.deltaChangeTextColor())
+                                    //.foregroundStyle(context.state.deltaChangeTextColor())
+                                    .foregroundStyle(gradient)
                                     .lineLimit(1)
                                 Text(context.state.bgUnitString)
                                     .font(.system(size: 28))
-                                    .foregroundStyle(.colorTertiary)
+                                    //.foregroundStyle(.colorTertiary)
+                                    .foregroundStyle(gradient)
                                     .lineLimit(1)
                             }
                         }
@@ -143,13 +209,14 @@ struct XDripWidgetLiveActivity: Widget {
                         HStack {
                             Text(context.state.dataSourceDescription)
                                 .font(.caption).bold()
-                                .foregroundStyle(.colorSecondary)
+                                .foregroundStyle(gradient)
                             
                             Spacer()
                             
                             Text("Last reading at \(context.state.bgReadingDate?.formatted(date: .omitted, time: .shortened) ?? "--:--")")
                                 .font(.caption)
-                                .foregroundStyle(.colorTertiary)
+                                //.foregroundStyle(.colorTertiary)
+                                .foregroundStyle(gradient)
                         }
                         .padding(.top, 6)
                         .padding(.bottom, 10)
@@ -163,7 +230,8 @@ struct XDripWidgetLiveActivity: Widget {
                         VStack(alignment: .center) {
                             Text("Please open \(ConstantsHomeView.applicationName)")
                                 .font(.footnote).bold()
-                                .foregroundStyle(.black)
+                                //.foregroundStyle(.black)
+                                .foregroundStyle(gradient)
                                 .multilineTextAlignment(.center)
                                 .padding(EdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10))
                                 .background(.cyan).opacity(0.9)
@@ -174,7 +242,57 @@ struct XDripWidgetLiveActivity: Widget {
                 .activityBackgroundTint(.black)
             }
             
-        } dynamicIsland: { context in
+        }
+    dynamicIsland: { context in
+        
+        let bgValue = Int(context.state.bgValueStringInUserChosenUnit) ?? 0
+        let gradient = gradientForValue(bgValue)
+        
+        return DynamicIsland {
+            DynamicIslandExpandedRegion(.leading) {
+                Text("\(context.state.bgValueStringInUserChosenUnit)\(context.state.trendArrow())")
+                    .font(.largeTitle).fontWeight(.bold)
+                    .foregroundStyle(gradient)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    .minimumScaleFactor(0.1)
+                    .lineLimit(1)
+            }
+            DynamicIslandExpandedRegion(.trailing) {
+                HStack(alignment: .firstTextBaseline, spacing: 4) {
+                    Text(context.state.deltaChangeStringInUserChosenUnit())
+                        .font(.title).fontWeight(.bold)
+                        .foregroundStyle(gradient)
+                        .minimumScaleFactor(0.2)
+                        .lineLimit(1)
+                    
+                    Text(context.state.bgUnitString)
+                        .font(.title).fontWeight(.bold)
+                        .foregroundStyle(gradient)
+                        .minimumScaleFactor(0.2)
+                        .lineLimit(1)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            }
+            DynamicIslandExpandedRegion(.bottom) {
+                GlucoseChartView(glucoseChartType: .dynamicIsland, bgReadingValues: context.state.bgReadingValues, bgReadingDates: context.state.bgReadingDates, isMgDl: context.state.isMgDl, urgentLowLimitInMgDl: context.state.urgentLowLimitInMgDl, lowLimitInMgDl: context.state.lowLimitInMgDl, highLimitInMgDl: context.state.highLimitInMgDl, urgentHighLimitInMgDl: context.state.urgentHighLimitInMgDl, liveActivitySize: nil, hoursToShowScalingHours: nil, glucoseCircleDiameterScalingHours: nil, overrideChartHeight: nil, overrideChartWidth: nil)
+            }
+        } compactLeading: {
+            Text("\(context.state.bgValueStringInUserChosenUnit)\(context.state.trendArrow())")
+                .foregroundStyle(gradient).fontWeight(.bold)
+                .minimumScaleFactor(0.1)
+        } compactTrailing: {
+            Text(context.state.deltaChangeStringInUserChosenUnit())
+                .foregroundStyle(gradient).fontWeight(.bold)
+                .minimumScaleFactor(0.1)
+        } minimal: {
+            Text("\(context.state.bgValueStringInUserChosenUnit)")
+                .foregroundStyle(gradient).fontWeight(.bold)
+                .minimumScaleFactor(0.1)
+        }
+        .widgetURL(URL(string: "xdripswift"))
+        .keylineTint(context.state.bgTextColor())
+    }
+    /*dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {                    Text("\(context.state.bgValueStringInUserChosenUnit)\(context.state.trendArrow())")
                         .font(.largeTitle).bold()
@@ -218,6 +336,7 @@ struct XDripWidgetLiveActivity: Widget {
             .widgetURL(URL(string: "xdripswift"))
             .keylineTint(context.state.bgTextColor())
         }
+        */
     }
 }
 
