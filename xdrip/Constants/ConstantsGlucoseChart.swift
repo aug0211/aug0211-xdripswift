@@ -62,12 +62,55 @@ enum ConstantsGlucoseChart {
     
     // glucose circle/dot color and sizes
     
+    /// Auggie chart dynamic glucose colors
+    //Auggie - code for color based on BG number
+    static func dynamicColorForValue(_ value: Int) -> UIColor {
+        
+        //Auggie - define dynamic BG color
+        // Auggie's dynamic color - Define the hue values for the key points
+        let redHue: CGFloat = 0.0 / 360.0       // 0 degrees
+        let greenHue: CGFloat = 120.0 / 360.0   // 120 degrees
+        let purpleHue: CGFloat = 270.0 / 360.0  // 270 degrees
+        
+        var color: UIColor = UIColor.white // Default color
+        
+        // Define the bgLevel thresholds
+        //This seems to be the one that actually gets called
+        let targetLevel = Int(UserDefaults.standard.targetMarkValueInUserChosenUnit)
+        let minLevel = Int(UserDefaults.standard.urgentLowMarkValue)
+        let maxLevel = Int(UserDefaults.standard.urgentHighMarkValue)
+        print("Auggie RootViewController dynamic: min/target/max: \(minLevel)/\(targetLevel)/\(maxLevel).")
+        
+        // Calculate the hue based on the bgLevel
+        var hue: CGFloat
+        if value <= minLevel {
+            hue = redHue
+        } else if value >= maxLevel {
+            hue = purpleHue
+        } else if value <= targetLevel {
+            // Interpolate between red and green
+            let ratio = CGFloat(value - minLevel) / CGFloat(targetLevel - minLevel)
+            hue = redHue + ratio * (greenHue - redHue)
+        } else {
+            // Interpolate between green and purple
+            let ratio = CGFloat(value - targetLevel) / CGFloat(maxLevel - targetLevel)
+            hue = greenHue + ratio * (purpleHue - greenHue)
+        }
+        
+        // Return the color with full saturation and brightness
+        color = UIColor(hue: hue, saturation: 0.6, brightness: 0.9, alpha: 1.0)
+        return color
+    }
+    ///
+    //TODO: Auggie - we need to handle dynamic here
     /// glucose colors - for values in range
-    static let glucoseInRangeColor = UIColor.green
+    static let glucoseInRangeColor = UIColor.purple
     
+    //TODO: Auggie - we need to handle dynamic here
     /// glucose colors - for values higher than urgentHighMarkValue or lower than urgent LowMarkValue
     static let glucoseUrgentRangeColor = UIColor.red
 
+    //TODO: Auggie - we need to handle dynamic here
     /// glucose colors - for values between highMarkValue and urgentHighMarkValue or between urgentLowMarkValue and lowMarkValue
     static let glucoseNotUrgentRangeColor = UIColor.yellow
     

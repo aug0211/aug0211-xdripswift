@@ -62,13 +62,7 @@ extension XDripWatchComplication.Entry {
         /// - Returns: a Color either red, yellow or green
         func bgTextColor() -> Color {
             if let bgValueInMgDl = bgValueInMgDl {
-                if bgValueInMgDl >= urgentHighLimitInMgDl || bgValueInMgDl <= urgentLowLimitInMgDl {
-                    return .red
-                } else if bgValueInMgDl >= highLimitInMgDl || bgValueInMgDl <= lowLimitInMgDl {
-                    return .yellow
-                } else {
-                    return .green
-                }
+                return dynamicColorForValue(Int(bgValueInMgDl))
             } else {
                 // this would never usually be returned in real use but it keeps the compiler happy
                 return .colorSecondary

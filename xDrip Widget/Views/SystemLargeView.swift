@@ -11,15 +11,11 @@ import SwiftUI
 
 extension XDripWidget.EntryView {
     var systemLargeView: some View {
-        
-        let bgValue = Int(entry.widgetState.bgValueStringInUserChosenUnit) ?? 0
-        let gradient = gradientForValue(bgValue)
-        
-        return VStack(spacing: 0) {
+        VStack(spacing: 0) {
             HStack(alignment: .center) {
                 Text("\(entry.widgetState.bgValueStringInUserChosenUnit) \(entry.widgetState.trendArrow())")
                     .font(.largeTitle).fontWeight(.bold)
-                    .foregroundStyle(gradient)
+                    .foregroundStyle(entry.widgetState.bgTextColor())
                     .scaledToFill()
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
@@ -29,11 +25,11 @@ extension XDripWidget.EntryView {
                 HStack(alignment: .firstTextBaseline, spacing: 4) {
                     Text(entry.widgetState.deltaChangeStringInUserChosenUnit())
                         .font(.title).fontWeight(.semibold)
-                        .foregroundStyle(gradient)
+                        .foregroundStyle(entry.widgetState.deltaChangeTextColor())
                         .lineLimit(1)
                     Text(entry.widgetState.bgUnitString)
                         .font(.title)
-                        .foregroundStyle(gradient)
+                        .foregroundStyle(.colorTertiary)
                         .lineLimit(1)
                 }
             }
@@ -45,23 +41,22 @@ extension XDripWidget.EntryView {
                 if let keepAliveImageString = entry.widgetState.keepAliveImageString {
                     Image(systemName: keepAliveImageString)
                         .font(.caption)
-                        .foregroundStyle(gradient)
+                        .foregroundStyle(.colorTertiary)
                         .padding(.trailing, -4)
                 }
                 
                 Text(entry.widgetState.dataSourceDescription)
                     .font(.caption).bold()
-                    .foregroundStyle(gradient)
+                    .foregroundStyle(.colorSecondary)
                 
                 Spacer()
                 
                 Text("Last reading at \(entry.widgetState.bgReadingDate?.formatted(date: .omitted, time: .shortened) ?? "--:--")")
                     .font(.caption)
-                    .foregroundStyle(gradient)
+                    .foregroundStyle(.colorTertiary)
             }
             .padding(.top, 10)
         }
         .widgetBackground(backgroundView: Color.black)
     }
 }
-
