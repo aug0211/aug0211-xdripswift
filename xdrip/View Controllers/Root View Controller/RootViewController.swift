@@ -2319,8 +2319,8 @@ final class RootViewController: UIViewController, ObservableObject {
         // if not, then set color, depending on value lower than low mark or higher than high mark
         // set both HIGH and LOW BG values to red as previous yellow for hig is now not so obvious due to in-range colour of green.
         
-        
-        //Auggie - need to set colors here!
+        valueLabelOutlet.font = UIFont.boldSystemFont(ofSize: valueLabelOutlet.font.pointSize)
+
         if lastReading.timeStamp < Date(timeIntervalSinceNow: -60 * 11) {
             
             valueLabelOutlet.textColor = UIColor.lightGray
