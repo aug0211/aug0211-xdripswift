@@ -154,8 +154,13 @@ final class WatchStateModel: NSObject, ObservableObject {
             var deltaSign: String = ""
             if (deltaChangeInMgDl > 0) { deltaSign = "+"; }
             
+            // Auggie - this is broken, I often get inaccurate +0s, when we are in fact at +/- 1
+            // Screen shots saved to phone camera reel at 9:59 AM June 18, 2024
+            return deltaSign + valueAsString
+            print("Auggie: watch state model: \(deltaSign) + \(valueAsString)")
             // quickly check "value" and prevent "-0mg/dl" or "-0.0mmol/l" being displayed
             // show unitized zero deltas as +0 or +0.0 as per Nightscout format
+            /*
             if (isMgDl) {
                 if (deltaChangeInMgDl > -1) && (deltaChangeInMgDl < 1) {
                     print("Auggie: deltaChangeInMgDl = \(deltaChangeInMgDl)")
@@ -170,6 +175,7 @@ final class WatchStateModel: NSObject, ObservableObject {
                     return deltaSign + valueAsString
                 }
             }
+             */
         } else {
             return "-"
         }
