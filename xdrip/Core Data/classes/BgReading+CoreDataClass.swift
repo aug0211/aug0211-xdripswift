@@ -178,10 +178,17 @@ public class BgReading: NSManagedObject {
         var deltaSign:String = ""
         if (value > 0) { deltaSign = "+"; }
         
+        // Auggie - this is broken, I often get inaccurate +0s, when we are in fact at +/- 1
+        // Screen shots saved to phone camera reel at 9:59 AM June 18, 2024
+        
         // quickly check "value" and prevent "-0mg/dl" or "-0.0mmol/l" being displayed
         // show unitized zero deltas as +0 or +0.0 as per Nightscout format
+        
+        return deltaSign + valueAsString + (showUnit ? (" " + Texts_Common.mgdl):"");
+        /*
         if (mgdl) {
             if (value > -1) && (value < 1) {
+                print("Auggie: valueAsString (bg delta) = \(valueAsString)")
                 return "+0" + (showUnit ? (" " + Texts_Common.mgdl):"");
             } else {
                 return deltaSign + valueAsString + (showUnit ? (" " + Texts_Common.mgdl):"");
@@ -193,6 +200,7 @@ public class BgReading: NSManagedObject {
                 return deltaSign + valueAsString + (showUnit ? (" " + Texts_Common.mmol):"");
             }
         }
+         */
     }
     
     func currentSlope(previousBgReading:BgReading?) -> Double {
