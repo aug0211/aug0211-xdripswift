@@ -779,8 +779,6 @@ public class GlucoseChartManager {
         // in Range circle layers
         let inRangeGlucoseCirclesLayer = ChartPointsScatterCirclesLayer(xAxis: xAxisLayer.axis, yAxis: yAxisLayer.axis, chartPoints: inRangeGlucoseChartPoints, displayDelay: 0, itemSize: CGSize(width: glucoseCircleDiameter, height: glucoseCircleDiameter), itemFillColor: ConstantsGlucoseChart.dynamicColorForValue(400), optimized: true)
         
-        print("Auggie: ConstnactsGlucoseChart inside GlucoseChart Manager: \(glucoseChartPoints.lastGlucoseChartPoint?.description)")
-
         // urgent Range circle layers
         let urgentRangeGlucoseCirclesLayer = ChartPointsScatterCirclesLayer(xAxis: xAxisLayer.axis, yAxis: yAxisLayer.axis, chartPoints: urgentRangeGlucoseChartPoints, displayDelay: 0, itemSize: CGSize(width: glucoseCircleDiameter, height: glucoseCircleDiameter), itemFillColor: ConstantsGlucoseChart.glucoseUrgentRangeColor, optimized: true)
 

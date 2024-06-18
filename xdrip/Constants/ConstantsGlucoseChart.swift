@@ -79,7 +79,7 @@ enum ConstantsGlucoseChart {
         let targetLevel = Int(UserDefaults.standard.targetMarkValueInUserChosenUnit)
         let minLevel = Int(UserDefaults.standard.urgentLowMarkValue)
         let maxLevel = Int(UserDefaults.standard.urgentHighMarkValue)
-        print("Auggie RootViewController dynamic: min/target/max: \(minLevel)/\(targetLevel)/\(maxLevel).")
+        //print("Auggie ConstantsGlucoseChart dynamic: min/target/max: \(minLevel)/\(targetLevel)/\(maxLevel).")
         
         // Calculate the hue based on the bgLevel
         var hue: CGFloat
