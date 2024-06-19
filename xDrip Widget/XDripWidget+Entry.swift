@@ -127,26 +127,12 @@ extension XDripWidget.Entry {
         /// - Returns: a string holding the formatted delta change value (i.e. +0.4 or -6)
         func deltaChangeStringInUserChosenUnit() -> String {
             if let deltaChangeInMgDl = deltaChangeInMgDl, let bgReadingDate = bgReadingDate, bgReadingDate > Date().addingTimeInterval(-ConstantsWidgetExtension.bgReadingDateVeryStaleInMinutes) {
-                var deltaSign: String = deltaChangeInMgDl >= 0 ? "+" : ""
+                let deltaSign: String = deltaChangeInMgDl > 0 ? "+" : ""
                 let valueAsString = deltaChangeInMgDl.mgdlToMmolAndToString(mgdl: isMgDl)
-                print ("Auggie: valueAsString XDripWidget+Entry = \(valueAsString)")
+                
                 //Auggie - the below logic somehow doesn't work and creates false +0s - tested and proven elsewhere in app
                 //Auggie - instead, just return the deltaSign and valueAsString
-                
-                if (deltaChangeInMgDl >= 0) {
-                    deltaSign = "+";
-                }
-                // Auggie - this is broken, I often get inaccurate +0s, when we are in fact at +/- 1
-                // Screen shots saved to phone camera reel at 9:59 AM June 18, 2024
-                
-                if deltaChangeInMgDl == 0 {
-                    print("Auggie: hardcoded +0 delta")
-                    return "+0";
-                }
-                else {
-                    return deltaSign + valueAsString;
-                }
-                
+                return deltaSign + valueAsString
                 // quickly check "value" and prevent "-0mg/dl" or "-0.0mmol/l" being displayed
                 // show unitized zero deltas as +0 or +0.0 as per Nightscout format
                 /*
