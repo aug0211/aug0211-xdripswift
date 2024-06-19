@@ -158,7 +158,6 @@ final class WatchStateModel: NSObject, ObservableObject {
             // show unitized zero deltas as +0 or +0.0 as per Nightscout format
             if (isMgDl) {
                 if (deltaChangeInMgDl > -1) && (deltaChangeInMgDl < 1) {
-                    print("Auggie: deltaChangeInMgDl = \(deltaChangeInMgDl)")
                     return "+0"
                 } else {
                     return deltaSign + valueAsString
