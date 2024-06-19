@@ -19,10 +19,12 @@ extension XDripWatchComplication.EntryView {
                     HStack(alignment: .center) {
                         HStack(alignment: .center, spacing: 4) {
                             Text("\(entry.widgetState.bgValueStringInUserChosenUnit)\(entry.widgetState.trendArrow()) ")
+                                //Auggie - watch font size adjustment here, it too big
                                 .font(.system(size: entry.widgetState.isSmallScreen() ? 20 : 24)).bold()
                                 .foregroundStyle(entry.widgetState.bgTextColor())
                             
                             Text(entry.widgetState.deltaChangeStringInUserChosenUnit())
+                                //Auggie - watch font size adjustment here, it too big
                                 .font(.system(size: entry.widgetState.isSmallScreen() ? 20 : 24)).fontWeight(.semibold)
                                 .foregroundStyle(.colorPrimary)
                                 .lineLimit(1)

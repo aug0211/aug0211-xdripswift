@@ -124,7 +124,7 @@ final class WatchStateModel: NSObject, ObservableObject {
         if let bgReadingDate = bgReadingDate(), bgReadingDate > Date().addingTimeInterval(-60 * 20) {
             switch slopeOrdinal {
             case 7:
-                return "\u{2193}\u{2193}" // ↓↓
+                return "\u{2193}" // ↓ Auggie - text space \u{2193}" // ↓↓
             case 6:
                 return "\u{2193}" // ↓
             case 5:

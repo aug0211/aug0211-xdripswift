@@ -93,7 +93,7 @@ extension XDripWatchComplication.Entry {
         func trendArrow() -> String {
             switch slopeOrdinal {
             case 7:
-                return "\u{2193}\u{2193}" // ↓↓
+                return "\u{2193}" // ↓ Auggie - text space \u{2193}" // ↓↓
             case 6:
                 return "\u{2193}" // ↓
             case 5:
