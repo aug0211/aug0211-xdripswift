@@ -170,18 +170,13 @@ struct XDripWidgetAttributes: ActivityAttributes {
                 let deltaSign: String = deltaChangeInMgDl > 0 ? "+" : ""
                 let valueAsString = deltaChangeInMgDl.mgdlToMmolAndToString(mgdl: isMgDl)
                 
-                //Auggie - the below logic somehow doesn't work and creates false +0s - tested and proven elsewhere in app
-                //Auggie - instead, just return the deltaSign and valueAsString
-                return deltaSign + valueAsString
                 // quickly check "value" and prevent "-0mg/dl" or "-0.0mmol/l" being displayed
                 // show unitized zero deltas as +0 or +0.0 as per Nightscout format
-                /*
                 if (isMgDl) {
                     return (deltaChangeInMgDl > -1 && deltaChangeInMgDl < 1) ?  "+0" : (deltaSign + valueAsString)
                 } else {
                     return (deltaChangeInMgDl > -0.1 && deltaChangeInMgDl < 0.1) ? "+0.0" : (deltaSign + valueAsString)
                 }
-                */
             } else {
                 return isMgDl ? "-" : "-.-"
             }
