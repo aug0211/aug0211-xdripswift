@@ -67,13 +67,62 @@ struct GlucoseChartView: View {
     /// Blood glucose color dependant on the user defined limit values
     /// - Returns: a Color object either red, yellow or green
     func bgColor(bgValueInMgDl: Double) -> Color {
-        if bgValueInMgDl >= urgentHighLimitInMgDl || bgValueInMgDl <= urgentLowLimitInMgDl {
-            return .red
-        } else if bgValueInMgDl >= highLimitInMgDl || bgValueInMgDl <= lowLimitInMgDl {
-            return .yellow
+        //Auggie - try populating the graph with the dynamic BG color
+        //Experimental, might be too colorful
+        //Auggie - define dynamic BG color
+        // Auggie's dynamic color - Define the hue values for the key points
+        let redHue: CGFloat = 0.0 / 360.0       // 0 degrees
+        let greenHue: CGFloat = 120.0 / 360.0   // 120 degrees
+        let purpleHue: CGFloat = 270.0 / 360.0  // 270 degrees
+        
+        var color: UIColor = UIColor.white // Default color
+        
+        let value = Int(bgValueInMgDl)
+        
+        // Define the bgLevel thresholds
+       /*
+        let minLevel = Int(ConstantsBGGraphBuilder.defaultUrgentLowMarkInMgdl) // Use the urgent low BG value for red text
+        let targetLevel = Int(ConstantsBGGraphBuilder.defaultTargetMarkInMgdl) // Use the target BG for green text
+        let maxLevel = Int(ConstantsBGGraphBuilder.defaultUrgentHighMarkInMgdl) // Use the urgent high BG value for purple text
+        print("Auggie: min/target/max: \(minLevel)/\(targetLevel)/\(maxLevel).")
+        */
+        
+        // Define the bgLevel thresholds
+        let minLevel = Int(Texts_SettingsView.labelUrgentLowValue) ?? 54 // Use the urgent low BG value for red text
+        let targetLevel = Int(Texts_SettingsView.labelTargetValue) ?? 90 // Use the target BG for green text
+        let maxLevel = Int(Texts_SettingsView.labelUrgentHighValue) ?? 181 // Use the urgent high BG value for purple text
+        print("Auggie GlucoseChartView bgColor: min/target/max: \(minLevel)/\(targetLevel)/\(maxLevel).")
+        
+        // Calculate the hue based on the bgLevel
+        var hue: CGFloat
+        if value <= minLevel {
+            hue = redHue
+        } else if value >= maxLevel {
+            hue = purpleHue
+        } else if value <= targetLevel {
+            // Interpolate between red and green
+            let ratio = CGFloat(value - minLevel) / CGFloat(targetLevel - minLevel)
+            hue = redHue + ratio * (greenHue - redHue)
         } else {
-            return .green
+            // Interpolate between green and purple
+            let ratio = CGFloat(value - targetLevel) / CGFloat(maxLevel - targetLevel)
+            hue = greenHue + ratio * (purpleHue - greenHue)
         }
+        
+        // Return the color with full saturation and brightness
+        color = UIColor(hue: hue, saturation: 0.6, brightness: 0.9, alpha: 1.0)
+        return Color(color)
+        
+        //Preserve the original code for easy rollback
+        /*
+        if bgValueInMgDl >= urgentHighLimitInMgDl || bgValueInMgDl <= urgentLowLimitInMgDl {
+            return .white
+        } else if bgValueInMgDl >= highLimitInMgDl || bgValueInMgDl <= lowLimitInMgDl {
+            return .white
+        } else {
+            return .white
+        }
+         */
     }
     
     // adapted from generateXAxisValues() from GlucoseChartManager.swift in xDrip target

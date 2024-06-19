@@ -100,13 +100,7 @@ final class WatchStateModel: NSObject, ObservableObject {
     /// - Returns: a Color object either red, yellow or green
     func bgTextColor() -> Color {
         if let bgReadingDate = bgReadingDate(), bgReadingDate > Date().addingTimeInterval(-60 * 7), let bgValueInMgDl = bgValueInMgDl() {
-            if bgValueInMgDl >= urgentHighLimitInMgDl || bgValueInMgDl <= urgentLowLimitInMgDl {
-                return .red
-            } else if bgValueInMgDl >= highLimitInMgDl || bgValueInMgDl <= lowLimitInMgDl {
-                return .yellow
-            } else {
-                return .green
-            }
+            return dynamicColorForValue(Int(bgValueInMgDl))
         } else {
             return .gray
         }

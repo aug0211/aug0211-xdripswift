@@ -15,6 +15,28 @@ import CoreData
 
 public class GlucoseMiniChartManager {
     
+    //Auggie - experimenting here
+    /// Method to get the most recent BG value in mg/dL
+        public func getCurrentBG() -> Double? {
+            // Combine all chart points into one array
+            let allChartPoints = glucoseChartPoints.urgentRange + glucoseChartPoints.inRange + glucoseChartPoints.notUrgentRange
+            
+            // Sort the combined array by date to ensure the latest point is last
+            let sortedChartPoints = allChartPoints.sorted { $0.x.scalar < $1.x.scalar }
+            
+            // Get the most recent chart point
+            guard let mostRecentChartPoint = sortedChartPoints.last else {
+                return nil
+            }
+            
+            // Return the y value of the most recent chart point, which represents the BG value
+            print ("Auggie: \(mostRecentChartPoint.y.scalar)")
+            return mostRecentChartPoint.y.scalar
+        }
+    
+    
+    // end experiments from Auggie
+    
     /// to hold range of glucose chartpoints
     /// - urgentRange = above urgentHighMarkValue or below urgentLowMarkValue
     /// - in range = between lowMarkValue and highMarkValue
@@ -272,12 +294,16 @@ public class GlucoseMiniChartManager {
         // glucose circle diameter for the mini-chart, declared here to save typing
         let glucoseCircleDiameter: CGFloat = ConstantsGlucoseChart.miniChartGlucoseCircleDiameter
         
+        
+        //TODO: Auggie - we need to handle dynamic here
         // In Range circle layers
         let inRangeGlucoseCircles = ChartPointsScatterCirclesLayer(xAxis: xAxisLayer.axis, yAxis: yAxisLayer.axis, chartPoints: inRangeGlucoseChartPoints, displayDelay: 0, itemSize: CGSize(width: glucoseCircleDiameter, height: glucoseCircleDiameter), itemFillColor: ConstantsGlucoseChart.glucoseInRangeColor, optimized: true)
 
+        //TODO: Auggie - we need to handle dynamic here
         // urgent Range circle layers
         let urgentRangeGlucoseCircles = ChartPointsScatterCirclesLayer(xAxis: xAxisLayer.axis, yAxis: yAxisLayer.axis, chartPoints: urgentRangeGlucoseChartPoints, displayDelay: 0, itemSize: CGSize(width: glucoseCircleDiameter, height: glucoseCircleDiameter), itemFillColor: ConstantsGlucoseChart.glucoseUrgentRangeColor, optimized: true)
 
+        //TODO: Auggie - we need to handle dynamic here
         // above target circle layers
         let notUrgentRangeGlucoseCircles = ChartPointsScatterCirclesLayer(xAxis: xAxisLayer.axis, yAxis: yAxisLayer.axis, chartPoints: notUrgentRangeGlucoseChartPoints, displayDelay: 0, itemSize: CGSize(width: glucoseCircleDiameter, height: glucoseCircleDiameter), itemFillColor: ConstantsGlucoseChart.glucoseNotUrgentRangeColor, optimized: true)
 

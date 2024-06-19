@@ -70,6 +70,10 @@ extension XDripWidget.Entry {
         /// - Returns: a Color either red, yellow or green
         func bgTextColor() -> Color {
             if let bgReadingDate = bgReadingDate, bgReadingDate > Date().addingTimeInterval(-ConstantsWidgetExtension.bgReadingDateStaleInMinutes), let bgValueInMgDl = bgValueInMgDl {
+                //Auggie - dynamic color!
+                return dynamicColorForValue(Int(bgValueInMgDl))
+                //Auggie - using dynamic colors above
+                /*
                 if bgValueInMgDl >= urgentHighLimitInMgDl || bgValueInMgDl <= urgentLowLimitInMgDl {
                     return .red
                 } else if bgValueInMgDl >= highLimitInMgDl || bgValueInMgDl <= lowLimitInMgDl {
@@ -77,6 +81,7 @@ extension XDripWidget.Entry {
                 } else {
                     return .green
                 }
+                */
             } else {
                 return .colorTertiary
             }

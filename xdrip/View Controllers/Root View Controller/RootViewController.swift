@@ -2318,25 +2318,37 @@ final class RootViewController: UIViewController, ObservableObject {
         // if data is stale (over 11 minutes old), show it as gray colour to indicate that it isn't current
         // if not, then set color, depending on value lower than low mark or higher than high mark
         // set both HIGH and LOW BG values to red as previous yellow for hig is now not so obvious due to in-range colour of green.
+        
+        valueLabelOutlet.font = UIFont.boldSystemFont(ofSize: valueLabelOutlet.font.pointSize)
+
         if lastReading.timeStamp < Date(timeIntervalSinceNow: -60 * 11) {
             
             valueLabelOutlet.textColor = UIColor.lightGray
             
-        } else if lastReading.calculatedValue.bgValueRounded(mgdl: mgdl) >= UserDefaults.standard.urgentHighMarkValueInUserChosenUnit.mmolToMgdl(mgdl: mgdl).bgValueRounded(mgdl: mgdl) || lastReading.calculatedValue.bgValueRounded(mgdl: mgdl) <= UserDefaults.standard.urgentLowMarkValueInUserChosenUnit.mmolToMgdl(mgdl: mgdl).bgValueRounded(mgdl: mgdl) {
+        } 
+        else {
+            //let gradient = gradientForValue(bgValue)
+            valueLabelOutlet.textColor = UIColor(dynamicColorForValue(Int(lastReading.calculatedValue)))
+        }
+        /*
+        else if lastReading.calculatedValue.bgValueRounded(mgdl: mgdl) >= UserDefaults.standard.urgentHighMarkValueInUserChosenUnit.mmolToMgdl(mgdl: mgdl).bgValueRounded(mgdl: mgdl) || lastReading.calculatedValue.bgValueRounded(mgdl: mgdl) <= UserDefaults.standard.urgentLowMarkValueInUserChosenUnit.mmolToMgdl(mgdl: mgdl).bgValueRounded(mgdl: mgdl) {
             
             // BG is higher than urgentHigh or lower than urgentLow objectives
             valueLabelOutlet.textColor = UIColor.red
             
-        } else if lastReading.calculatedValue.bgValueRounded(mgdl: mgdl) >= UserDefaults.standard.highMarkValueInUserChosenUnit.mmolToMgdl(mgdl: mgdl).bgValueRounded(mgdl: mgdl) || lastReading.calculatedValue.bgValueRounded(mgdl: mgdl) <= UserDefaults.standard.lowMarkValueInUserChosenUnit.mmolToMgdl(mgdl: mgdl).bgValueRounded(mgdl: mgdl) {
+        } 
+        else if lastReading.calculatedValue.bgValueRounded(mgdl: mgdl) >= UserDefaults.standard.highMarkValueInUserChosenUnit.mmolToMgdl(mgdl: mgdl).bgValueRounded(mgdl: mgdl) || lastReading.calculatedValue.bgValueRounded(mgdl: mgdl) <= UserDefaults.standard.lowMarkValueInUserChosenUnit.mmolToMgdl(mgdl: mgdl).bgValueRounded(mgdl: mgdl) {
             
             // BG is between urgentHigh/high and low/urgentLow objectives
             valueLabelOutlet.textColor = UIColor.yellow
             
-        } else {
+        } 
+        else {
             
             // BG is between high and low objectives so considered "in range"
             valueLabelOutlet.textColor = UIColor.green
         }
+        */
         
         // get minutes ago and create value text for minutes ago label
         let minutesAgo = -Int(lastReading.timeStamp.timeIntervalSinceNow) / 60
@@ -2360,6 +2372,107 @@ final class RootViewController: UIViewController, ObservableObject {
         
         self.updateMiniChart()
         
+    }
+    
+    //Auggie - functions for dynamic colors
+    //Auggie - code for gradients based on BG number
+    func gradientForValue(_ value: Int) -> LinearGradient {
+        
+        //Auggie - define dynamic BG color
+        // Auggie's dynamic color - Define the hue values for the key points
+        let redHue: CGFloat = 0.0 / 360.0       // 0 degrees
+        let greenHue: CGFloat = 120.0 / 360.0   // 120 degrees
+        let purpleHue: CGFloat = 270.0 / 360.0  // 270 degrees
+        
+        var color: UIColor = UIColor.white // Default color
+        
+        // Define the bgLevel thresholds
+       /*
+        let minLevel = Int(ConstantsBGGraphBuilder.defaultUrgentLowMarkInMgdl) // Use the urgent low BG value for red text
+        let targetLevel = Int(ConstantsBGGraphBuilder.defaultTargetMarkInMgdl) // Use the target BG for green text
+        let maxLevel = Int(ConstantsBGGraphBuilder.defaultUrgentHighMarkInMgdl) // Use the urgent high BG value for purple text
+        print("Auggie: min/target/max: \(minLevel)/\(targetLevel)/\(maxLevel).")
+        */
+        
+        // Define the bgLevel thresholds
+        //let minLevel = Int(Texts_SettingsView.labelUrgentLowValue) ?? 55 // Use the urgent low BG value for red text
+        //let targetLevel = Int(Texts_SettingsView.labelTargetValue) ?? 100 // Use the target BG for green text
+        //let maxLevel = Int(Texts_SettingsView.labelUrgentHighValue) ?? 250 // Use the urgent high BG value for purple text
+        let targetLevel = Int(UserDefaults.standard.targetMarkValueInUserChosenUnit)
+        let minLevel = Int(UserDefaults.standard.urgentLowMarkValue)
+        let maxLevel = Int(UserDefaults.standard.urgentHighMarkValue)
+        print("Auggie RootViewController gradient: min/target/max: \(minLevel)/\(targetLevel)/\(maxLevel).")
+        
+        // Calculate the hue based on the bgLevel
+        var hue: CGFloat
+        if value <= minLevel {
+            hue = redHue
+        } else if value >= maxLevel {
+            hue = purpleHue
+        } else if value <= targetLevel {
+            // Interpolate between red and green
+            let ratio = CGFloat(value - minLevel) / CGFloat(targetLevel - minLevel)
+            hue = redHue + ratio * (greenHue - redHue)
+        } else {
+            // Interpolate between green and purple
+            let ratio = CGFloat(value - targetLevel) / CGFloat(maxLevel - targetLevel)
+            hue = greenHue + ratio * (purpleHue - greenHue)
+        }
+        
+        // Return the color with full saturation and brightness
+        color = UIColor(hue: hue, saturation: 0.6, brightness: 0.9, alpha: 1.0)
+        return LinearGradient(
+            gradient: Gradient(colors: [Color(color), Color(color)]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+
+    //Auggie - code for color based on BG number
+    func dynamicColorForValue(_ value: Int) -> Color {
+        
+        //Auggie - define dynamic BG color
+        // Auggie's dynamic color - Define the hue values for the key points
+        let redHue: CGFloat = 0.0 / 360.0       // 0 degrees
+        let greenHue: CGFloat = 120.0 / 360.0   // 120 degrees
+        let purpleHue: CGFloat = 270.0 / 360.0  // 270 degrees
+        
+        var color: UIColor = UIColor.white // Default color
+        
+        // Define the bgLevel thresholds
+       /*
+        let minLevel = Int(ConstantsBGGraphBuilder.defaultUrgentLowMarkInMgdl) // Use the urgent low BG value for red text
+        let targetLevel = Int(ConstantsBGGraphBuilder.defaultTargetMarkInMgdl) // Use the target BG for green text
+        let maxLevel = Int(ConstantsBGGraphBuilder.defaultUrgentHighMarkInMgdl) // Use the urgent high BG value for purple text
+        print("Auggie: min/target/max: \(minLevel)/\(targetLevel)/\(maxLevel).")
+        */
+        
+        // Define the bgLevel thresholds
+        //This seems to be the one that actually gets called
+        let targetLevel = Int(UserDefaults.standard.targetMarkValueInUserChosenUnit)
+        let minLevel = Int(UserDefaults.standard.urgentLowMarkValue)
+        let maxLevel = Int(UserDefaults.standard.urgentHighMarkValue)
+        print("Auggie RootViewController dynamic: min/target/max: \(minLevel)/\(targetLevel)/\(maxLevel).")
+        
+        // Calculate the hue based on the bgLevel
+        var hue: CGFloat
+        if value <= minLevel {
+            hue = redHue
+        } else if value >= maxLevel {
+            hue = purpleHue
+        } else if value <= targetLevel {
+            // Interpolate between red and green
+            let ratio = CGFloat(value - minLevel) / CGFloat(targetLevel - minLevel)
+            hue = redHue + ratio * (greenHue - redHue)
+        } else {
+            // Interpolate between green and purple
+            let ratio = CGFloat(value - targetLevel) / CGFloat(maxLevel - targetLevel)
+            hue = greenHue + ratio * (purpleHue - greenHue)
+        }
+        
+        // Return the color with full saturation and brightness
+        color = UIColor(hue: hue, saturation: 0.6, brightness: 0.9, alpha: 1.0)
+        return Color(color)
     }
     
     /// if the user has chosen to show the mini-chart, then update it. If not, just return without doing anything.
