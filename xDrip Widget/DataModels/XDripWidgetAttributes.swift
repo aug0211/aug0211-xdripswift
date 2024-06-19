@@ -130,7 +130,6 @@ struct XDripWidgetAttributes: ActivityAttributes {
             let minLevel = Int(Texts_SettingsView.labelUrgentLowValue) ?? 54 // Use the urgent low BG value for red text
             let targetLevel = Int(Texts_SettingsView.labelTargetValue) ?? 90 // Use the target BG for green text
             let maxLevel = Int(Texts_SettingsView.labelUrgentHighValue) ?? 181 // Use the urgent high BG value for purple text
-            print("Auggie XDripWidgetAttributes dynamicColorForValue: min/target/max: \(minLevel)/\(targetLevel)/\(maxLevel).")
             
             // Calculate the hue based on the bgLevel
             var hue: CGFloat
