@@ -176,15 +176,22 @@ public class BgReading: NSManagedObject {
         let valueAsString = value.mgdlToMmolAndToString(mgdl: mgdl)
         
         var deltaSign:String = ""
-        if (value > 0) { deltaSign = "+"; }
-        
+        if (value >= 0) {
+            deltaSign = "+";
+        }
+        print ("Auggie: valueAsString BgReading+CoreDataClass = \(valueAsString)")
         // Auggie - this is broken, I often get inaccurate +0s, when we are in fact at +/- 1
         // Screen shots saved to phone camera reel at 9:59 AM June 18, 2024
         
         // quickly check "value" and prevent "-0mg/dl" or "-0.0mmol/l" being displayed
         // show unitized zero deltas as +0 or +0.0 as per Nightscout format
-        
-        return deltaSign + valueAsString + (showUnit ? (" " + Texts_Common.mgdl):"");
+        if value == 0 {
+            print("Auggie: hardcoded +0 delta")
+            return "+0" + (showUnit ? (" " + Texts_Common.mgdl):"");
+        }
+        else {
+            return deltaSign + valueAsString + (showUnit ? (" " + Texts_Common.mgdl):"");
+        }
         /*
         if (mgdl) {
             if (value > -1) && (value < 1) {
