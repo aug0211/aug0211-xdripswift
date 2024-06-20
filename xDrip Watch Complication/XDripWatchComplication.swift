@@ -40,14 +40,6 @@ func gradientForValue(_ value: Int) -> LinearGradient {
     var color: UIColor = UIColor.white // Default color
     
     // Define the bgLevel thresholds
-   /*
-    let minLevel = Int(ConstantsBGGraphBuilder.defaultUrgentLowMarkInMgdl) // Use the urgent low BG value for red text
-    let targetLevel = Int(ConstantsBGGraphBuilder.defaultTargetMarkInMgdl) // Use the target BG for green text
-    let maxLevel = Int(ConstantsBGGraphBuilder.defaultUrgentHighMarkInMgdl) // Use the urgent high BG value for purple text
-    print("Auggie: min/target/max: \(minLevel)/\(targetLevel)/\(maxLevel).")
-    */
-    
-    // Define the bgLevel thresholds
     let minLevel = Int(Texts_SettingsView.labelUrgentLowValue) ?? 54 // Use the urgent low BG value for red text
     let targetLevel = Int(Texts_SettingsView.labelTargetValue) ?? 90 // Use the target BG for green text
     let maxLevel = Int(Texts_SettingsView.labelUrgentHighValue) ?? 181 // Use the urgent high BG value for purple text
@@ -75,60 +67,6 @@ func gradientForValue(_ value: Int) -> LinearGradient {
         startPoint: .top,
         endPoint: .bottom
     )
-    
-    //Auggie - comment out gradient code, use dynamic BG color instead
-    /*
-    switch value {
-    case ...54:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.red, Color.red]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    case 55...64:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.red, Color.red]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    case 65...79:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.green, Color.yellow]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    case 80...100:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.green, Color.green]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    case 101...119:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.green, Color.teal]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    case 120...140:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.teal, Color.blue]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    case 141...180:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.blue, Color.indigo]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    default:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.indigo, Color.purple]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    }
-    */
 }
 
 //Auggie - code for color based on BG number
@@ -141,14 +79,6 @@ func dynamicColorForValue(_ value: Int) -> Color {
     let purpleHue: CGFloat = 270.0 / 360.0  // 270 degrees
     
     var color: UIColor = UIColor.white // Default color
-    
-    // Define the bgLevel thresholds
-   /*
-    let minLevel = Int(ConstantsBGGraphBuilder.defaultUrgentLowMarkInMgdl) // Use the urgent low BG value for red text
-    let targetLevel = Int(ConstantsBGGraphBuilder.defaultTargetMarkInMgdl) // Use the target BG for green text
-    let maxLevel = Int(ConstantsBGGraphBuilder.defaultUrgentHighMarkInMgdl) // Use the urgent high BG value for purple text
-    print("Auggie: min/target/max: \(minLevel)/\(targetLevel)/\(maxLevel).")
-    */
     
     // Define the bgLevel thresholds
     let minLevel = Int(Texts_SettingsView.labelUrgentLowValue) ?? 54 // Use the urgent low BG value for red text
