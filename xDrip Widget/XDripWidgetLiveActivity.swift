@@ -49,60 +49,6 @@ func gradientForValue(_ value: Int) -> LinearGradient {
         startPoint: .top,
         endPoint: .bottom
     )
-    
-    //Auggie - comment out gradient code, use dynamic BG color instead
-    /*
-    switch value {
-    case ...54:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.red, Color.red]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    case 55...64:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.red, Color.red]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    case 65...79:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.green, Color.yellow]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    case 80...100:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.green, Color.green]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    case 101...119:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.green, Color.teal]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    case 120...140:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.teal, Color.blue]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    case 141...180:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.blue, Color.indigo]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    default:
-        return LinearGradient(
-            gradient: Gradient(colors: [Color.indigo, Color.purple]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    }
-    */
 }
 
 //Auggie - code for color based on BG number
@@ -115,14 +61,6 @@ func dynamicColorForValue(_ value: Int) -> Color {
     let purpleHue: CGFloat = 270.0 / 360.0  // 270 degrees
     
     var color: UIColor = UIColor.white // Default color
-    
-    // Define the bgLevel thresholds
-   /*
-    let minLevel = Int(ConstantsBGGraphBuilder.defaultUrgentLowMarkInMgdl) // Use the urgent low BG value for red text
-    let targetLevel = Int(ConstantsBGGraphBuilder.defaultTargetMarkInMgdl) // Use the target BG for green text
-    let maxLevel = Int(ConstantsBGGraphBuilder.defaultUrgentHighMarkInMgdl) // Use the urgent high BG value for purple text
-    print("Auggie: min/target/max: \(minLevel)/\(targetLevel)/\(maxLevel).")
-    */
     
     // Define the bgLevel thresholds
     let minLevel = Int(Texts_SettingsView.labelUrgentLowValue) ?? 54 // Use the urgent low BG value for red text
@@ -182,13 +120,13 @@ struct XDripWidgetLiveActivity: Widget {
                     HStack(alignment: .firstTextBaseline, spacing: 4) {
                         Text(context.state.deltaChangeStringInUserChosenUnit())
                             .font(.title).fontWeight(.semibold)
-                            .foregroundStyle(context.state.deltaChangeTextColor())
+                            .foregroundStyle(context.state.bgTextColor())
                             .minimumScaleFactor(0.2)
                             .lineLimit(1)
                         
                         Text(context.state.bgUnitString)
                             .font(.title)
-                            .foregroundStyle(.colorTertiary)
+                            .foregroundStyle(context.state.bgTextColor())
                             .minimumScaleFactor(0.2)
                             .lineLimit(1)
                     }
@@ -211,13 +149,13 @@ struct XDripWidgetLiveActivity: Widget {
                         HStack(alignment: .firstTextBaseline, spacing: 4) {
                             Text(context.state.deltaChangeStringInUserChosenUnit())
                                 .font(.system(size: 20)).fontWeight(.semibold)
-                                .foregroundStyle(context.state.deltaChangeTextColor())
+                                .foregroundStyle(context.state.bgTextColor())
                                 .minimumScaleFactor(0.2)
                                 .lineLimit(1)
                             
                             Text(context.state.bgUnitString)
                                 .font(.system(size: 20))
-                                .foregroundStyle(.colorTertiary)
+                                .foregroundStyle(context.state.bgTextColor())
                                 .minimumScaleFactor(0.2)
                                 .lineLimit(1)
                         }
@@ -265,11 +203,11 @@ struct XDripWidgetLiveActivity: Widget {
                             HStack(alignment: .firstTextBaseline, spacing: 4) {
                                 Text(context.state.deltaChangeStringInUserChosenUnit())
                                     .font(.system(size: 28)).fontWeight(.semibold)
-                                    .foregroundStyle(context.state.deltaChangeTextColor())
+                                    .foregroundStyle(context.state.bgTextColor())
                                     .lineLimit(1)
                                 Text(context.state.bgUnitString)
                                     .font(.system(size: 28))
-                                    .foregroundStyle(.colorTertiary)
+                                    .foregroundStyle(context.state.bgTextColor())
                                     .lineLimit(1)
                             }
                         }
@@ -327,13 +265,13 @@ struct XDripWidgetLiveActivity: Widget {
                     HStack(alignment: .firstTextBaseline, spacing: 4) {
                         Text(context.state.deltaChangeStringInUserChosenUnit())
                             .font(.title).fontWeight(.semibold)
-                            .foregroundStyle(context.state.deltaChangeTextColor())
+                            .foregroundStyle(context.state.bgTextColor())
                             .minimumScaleFactor(0.2)
                             .lineLimit(1)
                         
                         Text(context.state.bgUnitString)
                             .font(.title)
-                            .foregroundStyle(.colorSecondary)
+                            .foregroundStyle(context.state.bgTextColor())
                             .minimumScaleFactor(0.2)
                             .lineLimit(1)
                     }
@@ -343,17 +281,32 @@ struct XDripWidgetLiveActivity: Widget {
                     GlucoseChartView(glucoseChartType: .dynamicIsland, bgReadingValues: context.state.bgReadingValues, bgReadingDates: context.state.bgReadingDates, isMgDl: context.state.isMgDl, urgentLowLimitInMgDl: context.state.urgentLowLimitInMgDl, lowLimitInMgDl: context.state.lowLimitInMgDl, highLimitInMgDl: context.state.highLimitInMgDl, urgentHighLimitInMgDl: context.state.urgentHighLimitInMgDl, liveActivitySize: nil, hoursToShowScalingHours: nil, glucoseCircleDiameterScalingHours: nil, overrideChartHeight: nil, overrideChartWidth: nil)
                 }
             } compactLeading: {
-                Text("\(context.state.bgValueStringInUserChosenUnit)\(context.state.trendArrow())")
-                    .foregroundStyle(context.state.bgTextColor())
-                    .minimumScaleFactor(0.1)
+                HStack(spacing: 1) {
+                    Image(systemName: "drop.fill")
+                        .renderingMode(.template)
+                        .foregroundStyle(context.state.bgTextColor())
+                    Text("\(context.state.bgValueStringInUserChosenUnit)")
+                        .foregroundStyle(context.state.bgTextColor())
+                        .minimumScaleFactor(0.1)
+                        .fontWeight(.bold)
+                }
             } compactTrailing: {
-                Text(context.state.deltaChangeStringInUserChosenUnit())
-                    .foregroundStyle(context.state.deltaChangeTextColor())
-                    .minimumScaleFactor(0.1)
+                HStack(spacing: 1) {
+                    Text("\(context.state.trendArrow())")
+                        .foregroundStyle(context.state.bgTextColor())
+                        .minimumScaleFactor(0.1)
+                        .fontWeight(.bold)
+                        .baselineOffset(-2)
+                    Text("\(context.state.deltaChangeStringInUserChosenUnit())")
+                        .foregroundStyle(context.state.bgTextColor())
+                        .minimumScaleFactor(0.1)
+                        .fontWeight(.bold)
+                }
             } minimal: {
                 Text("\(context.state.bgValueStringInUserChosenUnit)")
                     .foregroundStyle(context.state.bgTextColor())
                     .minimumScaleFactor(0.1)
+                    .fontWeight(.bold)
             }
             .widgetURL(URL(string: "xdripswift"))
             .keylineTint(context.state.bgTextColor())
@@ -403,7 +356,7 @@ struct XDripWidgetLiveActivity_Previews: PreviewProvider {
     
     static let attributes = XDripWidgetAttributes()
     
-    static let contentState = XDripWidgetAttributes.ContentState(bgReadingValues: bgValueArray(), bgReadingDates: bgDateArray(), isMgDl: true, slopeOrdinal: 5, deltaChangeInMgDl: -2, urgentLowLimitInMgDl: 54, lowLimitInMgDl: 66, highLimitInMgDl: 166, urgentHighLimitInMgDl: 181, liveActivitySize: .large, dataSourceDescription: "Dexcom G7")
+    static let contentState = XDripWidgetAttributes.ContentState(bgReadingValues: bgValueArray(), bgReadingDates: bgDateArray(), isMgDl: true, slopeOrdinal: 5, deltaChangeInMgDl: -2, urgentLowLimitInMgDl: 54, lowLimitInMgDl: 64, highLimitInMgDl: 166, urgentHighLimitInMgDl: 181, liveActivitySize: .large, dataSourceDescription: "Dexcom G7")
     
     static var previews: some View {
         attributes
