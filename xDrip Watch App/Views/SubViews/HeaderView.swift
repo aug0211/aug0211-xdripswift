@@ -29,11 +29,12 @@ struct HeaderView: View {
                 Spacer()
                 Text(watchState.deltaChangeStringInUserChosenUnit())
                     .font(.system(size: isSmallScreen ? 24 : 28)).fontWeight(.semibold)
+                    .foregroundStyle(watchState.bgTextColor())
                     .lineLimit(1)
                     .padding(.bottom, isSmallScreen ? -5 : -6)
                 Text(watchState.bgUnitString())
                     .font(.system(size: isSmallScreen ? 12 : 14))
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(watchState.bgTextColor())
                     .lineLimit(1)
             }
         }
