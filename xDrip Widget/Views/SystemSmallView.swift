@@ -23,7 +23,7 @@ extension XDripWidget.EntryView {
                 
                 Text(entry.widgetState.deltaChangeStringInUserChosenUnit())
                     .font(.title).fontWeight(.semibold)
-                    .foregroundStyle(entry.widgetState.deltaChangeTextColor())
+                    .foregroundStyle(entry.widgetState.bgTextColor())
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
             }

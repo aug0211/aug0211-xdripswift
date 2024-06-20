@@ -25,11 +25,11 @@ extension XDripWidget.EntryView {
                 HStack(alignment: .firstTextBaseline, spacing: 4) {
                     Text(entry.widgetState.deltaChangeStringInUserChosenUnit())
                         .font(.title).fontWeight(.semibold)
-                        .foregroundStyle(entry.widgetState.deltaChangeTextColor())
+                        .foregroundStyle(entry.widgetState.bgTextColor())
                         .lineLimit(1)
                     Text(entry.widgetState.bgUnitString)
                         .font(.title)
-                        .foregroundStyle(.colorTertiary)
+                        .foregroundStyle(entry.widgetState.bgTextColor())
                         .lineLimit(1)
                 }
             }
