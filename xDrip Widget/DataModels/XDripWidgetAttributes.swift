@@ -130,7 +130,6 @@ struct XDripWidgetAttributes: ActivityAttributes {
             let minLevel = Int(Texts_SettingsView.labelUrgentLowValue) ?? 54 // Use the urgent low BG value for red text
             let targetLevel = Int(Texts_SettingsView.labelTargetValue) ?? 90 // Use the target BG for green text
             let maxLevel = Int(Texts_SettingsView.labelUrgentHighValue) ?? 181 // Use the urgent high BG value for purple text
-            print("Auggie XDripWidgetAttributes dynamicColorForValue: min/target/max: \(minLevel)/\(targetLevel)/\(maxLevel).")
             
             // Calculate the hue based on the bgLevel
             var hue: CGFloat
@@ -173,9 +172,9 @@ struct XDripWidgetAttributes: ActivityAttributes {
                 // quickly check "value" and prevent "-0mg/dl" or "-0.0mmol/l" being displayed
                 // show unitized zero deltas as +0 or +0.0 as per Nightscout format
                 if (isMgDl) {
-                    return (deltaChangeInMgDl > -1 && deltaChangeInMgDl < 1) ?  "+0" : (deltaSign + valueAsString)
+                    return (deltaChangeInMgDl == 0) ?  "+0" : (deltaSign + valueAsString)
                 } else {
-                    return (deltaChangeInMgDl > -0.1 && deltaChangeInMgDl < 0.1) ? "+0.0" : (deltaSign + valueAsString)
+                    return (deltaChangeInMgDl == 0.0) ? "+0.0" : (deltaSign + valueAsString)
                 }
             } else {
                 return isMgDl ? "-" : "-.-"
@@ -188,7 +187,7 @@ struct XDripWidgetAttributes: ActivityAttributes {
             if let bgReadingDate = bgReadingDate, bgReadingDate > Date().addingTimeInterval(-ConstantsWidgetExtension.bgReadingDateVeryStaleInMinutes) {
                 switch slopeOrdinal {
                 case 7:
-                    return "\u{2193}\u{2193}" // ↓↓
+                    return "\u{2193}" // ↓ Auggie - text space \u{2193}" // ↓↓
                 case 6:
                     return "\u{2193}" // ↓
                 case 5:

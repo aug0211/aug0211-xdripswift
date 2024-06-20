@@ -124,7 +124,7 @@ final class WatchStateModel: NSObject, ObservableObject {
         if let bgReadingDate = bgReadingDate(), bgReadingDate > Date().addingTimeInterval(-60 * 20) {
             switch slopeOrdinal {
             case 7:
-                return "\u{2193}\u{2193}" // ↓↓
+                return "\u{2193}" // ↓ Auggie - text space \u{2193}" // ↓↓
             case 6:
                 return "\u{2193}" // ↓
             case 5:
@@ -157,13 +157,13 @@ final class WatchStateModel: NSObject, ObservableObject {
             // quickly check "value" and prevent "-0mg/dl" or "-0.0mmol/l" being displayed
             // show unitized zero deltas as +0 or +0.0 as per Nightscout format
             if (isMgDl) {
-                if (deltaChangeInMgDl > -1) && (deltaChangeInMgDl < 1) {
+                if (deltaChangeInMgDl == 0) {
                     return "+0"
                 } else {
                     return deltaSign + valueAsString
                 }
             } else {
-                if (deltaChangeInMgDl > -0.1) && (deltaChangeInMgDl < 0.1) {
+                if (deltaChangeInMgDl == 0.0) {
                     return "+0.0"
                 } else {
                     return deltaSign + valueAsString
