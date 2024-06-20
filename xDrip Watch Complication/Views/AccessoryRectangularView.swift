@@ -18,21 +18,34 @@ extension XDripWatchComplication.EntryView {
                 VStack(spacing: 0) {
                     HStack(alignment: .center) {
                         HStack(alignment: .center, spacing: 4) {
-                            Text("\(entry.widgetState.bgValueStringInUserChosenUnit)\(entry.widgetState.trendArrow()) ")
-                                .font(.system(size: entry.widgetState.isSmallScreen() ? 20 : 24)).bold()
+                            Image(systemName: "drop.fill")
+                                .renderingMode(.template)
+                                .font(.system(size: entry.widgetState.isSmallScreen() ? 12 : 16))//.bold()
                                 .foregroundStyle(entry.widgetState.bgTextColor())
                             
+                            Text("\(entry.widgetState.bgValueStringInUserChosenUnit)")
+                                .font(.system(size: entry.widgetState.isSmallScreen() ? 16 : 20)).bold()
+                                .baselineOffset(2)
+                                .foregroundStyle(entry.widgetState.bgTextColor())
+                            
+                            Text("\(entry.widgetState.trendArrow())")
+                                .font(.system(size: entry.widgetState.isSmallScreen() ? 16 : 20)).fontWeight(.semibold)
+                                .foregroundStyle(entry.widgetState.bgTextColor())
+                                //.baselineOffset(-2)
+                                .lineLimit(1)
+                            
                             Text(entry.widgetState.deltaChangeStringInUserChosenUnit())
-                                .font(.system(size: entry.widgetState.isSmallScreen() ? 20 : 24)).fontWeight(.semibold)
-                                .foregroundStyle(.colorPrimary)
+                                .font(.system(size: entry.widgetState.isSmallScreen() ? 16 : 20)).fontWeight(.semibold)
+                                .foregroundStyle(entry.widgetState.bgTextColor())
+                                .baselineOffset(2)
                                 .lineLimit(1)
                         }
                         
                         Spacer()
                         
                         Text("\(entry.widgetState.bgReadingDate?.formatted(date: .omitted, time: .shortened) ?? "--:--")")
-                            .font(.system(size: entry.widgetState.isSmallScreen() ? 15 : 17))
-                            .foregroundStyle(.colorPrimary)
+                            .font(.system(size: entry.widgetState.isSmallScreen() ? 14 : 16))
+                            .foregroundStyle(entry.widgetState.bgTextColor())
                             .minimumScaleFactor(0.2)
                     }
                     .padding(0)
