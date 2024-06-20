@@ -17,7 +17,7 @@ extension XDripWatchComplication.EntryView {
             if entry.widgetState.liveDataIsEnabled {
                 VStack(spacing: 0) {
                     HStack(alignment: .center) {
-                        HStack(alignment: .center, spacing: 4) {
+                        HStack(alignment: .center) {
                             Image(systemName: "drop.fill")
                                 .renderingMode(.template)
                                 .font(.system(size: entry.widgetState.isSmallScreen() ? 12 : 16))//.bold()
@@ -27,26 +27,30 @@ extension XDripWatchComplication.EntryView {
                                 .font(.system(size: entry.widgetState.isSmallScreen() ? 16 : 20)).bold()
                                 .baselineOffset(2)
                                 .foregroundStyle(entry.widgetState.bgTextColor())
-                            
-                            Text("\(entry.widgetState.trendArrow())")
-                                .font(.system(size: entry.widgetState.isSmallScreen() ? 16 : 20)).fontWeight(.semibold)
-                                .foregroundStyle(entry.widgetState.bgTextColor())
-                                //.baselineOffset(-2)
-                                .lineLimit(1)
-                            
-                            Text(entry.widgetState.deltaChangeStringInUserChosenUnit())
-                                .font(.system(size: entry.widgetState.isSmallScreen() ? 16 : 20)).fontWeight(.semibold)
-                                .foregroundStyle(entry.widgetState.bgTextColor())
-                                .baselineOffset(2)
-                                .lineLimit(1)
                         }
+                        
+                        Spacer()
+
+                        Text("\(entry.widgetState.trendArrow())")
+                            .font(.system(size: entry.widgetState.isSmallScreen() ? 16 : 20)).fontWeight(.semibold)
+                            .foregroundStyle(entry.widgetState.bgTextColor())
+                            .lineLimit(1)
+                            .padding(.trailing, -5)
+                        
+                        Text(entry.widgetState.deltaChangeStringInUserChosenUnit())
+                            .font(.system(size: entry.widgetState.isSmallScreen() ? 16 : 20)).fontWeight(.semibold)
+                            .foregroundStyle(entry.widgetState.bgTextColor())
+                            .baselineOffset(2)
+                            .lineLimit(1)
+                        
                         
                         Spacer()
                         
                         Text("\(entry.widgetState.bgReadingDate?.formatted(date: .omitted, time: .shortened) ?? "--:--")")
-                            .font(.system(size: entry.widgetState.isSmallScreen() ? 14 : 16))
+                            .font(.system(size: entry.widgetState.isSmallScreen() ? 16 : 20))
                             .foregroundStyle(entry.widgetState.bgTextColor())
                             .minimumScaleFactor(0.2)
+                            .baselineOffset(1)
                     }
                     .padding(0)
                     
