@@ -46,7 +46,7 @@ extension XDripWatchComplication.EntryView {
                         
                         Spacer()
                         
-                        Text("\(entry.widgetState.bgReadingDate?.formatted(date: .omitted, time: .shortened) ?? "--:--")")
+                        Text("\(entry.widgetState.bgReadingDate?.formatted(date: .omitted, time: .shortened).dropLast(3) ?? "--:--")")
                             .font(.system(size: entry.widgetState.isSmallScreen() ? 16 : 20))
                             .foregroundStyle(entry.widgetState.bgTextColor())
                             .minimumScaleFactor(0.2)
