@@ -12,20 +12,34 @@ import SwiftUI
 extension XDripWidget.EntryView {
     var systemSmallView: some View {
         VStack(spacing: 0) {
-            HStack(alignment: .center) {
-                Text("\(entry.widgetState.bgValueStringInUserChosenUnit)\(entry.widgetState.trendArrow())")
+            HStack(alignment: .center, spacing: 2) {
+                Image(systemName: "drop.fill")
+                    .renderingMode(.template)
+                    .foregroundStyle(entry.widgetState.bgTextColor())
+                    .font(.subheadline)
+                    .minimumScaleFactor(0.5)
+                Text("\(entry.widgetState.bgValueStringInUserChosenUnit)")
                     .font(.title).fontWeight(.bold)
                     .foregroundStyle(entry.widgetState.bgTextColor())
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
+                    .baselineOffset(3)
                 
                 Spacer()
                 
-                Text(entry.widgetState.deltaChangeStringInUserChosenUnit())
-                    .font(.title).fontWeight(.semibold)
-                    .foregroundStyle(entry.widgetState.bgTextColor())
-                    .minimumScaleFactor(0.5)
-                    .lineLimit(1)
+                HStack(alignment: .firstTextBaseline, spacing: 4) {
+                    Text(entry.widgetState.trendArrow())
+                        .font(.title2).fontWeight(.semibold)
+                        .foregroundStyle(entry.widgetState.bgTextColor())
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
+                    Text(entry.widgetState.deltaChangeStringInUserChosenUnit())
+                        .font(.title2).fontWeight(.semibold)
+                        .foregroundStyle(entry.widgetState.bgTextColor())
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
+                        .baselineOffset(3)
+                }
             }
             .padding(.top, -6)
             .padding(.bottom, 6)

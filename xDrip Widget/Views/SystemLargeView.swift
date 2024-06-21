@@ -13,24 +13,39 @@ extension XDripWidget.EntryView {
     var systemLargeView: some View {
         VStack(spacing: 0) {
             HStack(alignment: .center) {
-                Text("\(entry.widgetState.bgValueStringInUserChosenUnit) \(entry.widgetState.trendArrow())")
+                Image(systemName: "drop.fill")
+                    .renderingMode(.template)
+                    .foregroundStyle(entry.widgetState.bgTextColor())
+                    .font(.title)
+                    .minimumScaleFactor(0.5)
+                Text("\(entry.widgetState.bgValueStringInUserChosenUnit)")
                     .font(.largeTitle).fontWeight(.bold)
                     .foregroundStyle(entry.widgetState.bgTextColor())
                     .scaledToFill()
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
+                    .baselineOffset(3)
                 
                 Spacer()
                 
                 HStack(alignment: .firstTextBaseline, spacing: 4) {
+                    Text(entry.widgetState.trendArrow())
+                        .font(.title).fontWeight(.semibold)
+                        .foregroundStyle(entry.widgetState.bgTextColor())
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                     Text(entry.widgetState.deltaChangeStringInUserChosenUnit())
                         .font(.title).fontWeight(.semibold)
                         .foregroundStyle(entry.widgetState.bgTextColor())
                         .lineLimit(1)
+                        .baselineOffset(3)
+                        .minimumScaleFactor(0.5)
+                    /*
                     Text(entry.widgetState.bgUnitString)
                         .font(.title)
                         .foregroundStyle(entry.widgetState.bgTextColor())
                         .lineLimit(1)
+                    */
                 }
             }
             .padding(.bottom, 6)

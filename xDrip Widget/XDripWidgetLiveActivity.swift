@@ -191,24 +191,36 @@ struct XDripWidgetLiveActivity: Widget {
                     
                     VStack(spacing: 0) {
                         HStack(alignment: .center) {
-                            Text("\(context.state.bgValueStringInUserChosenUnit) \(context.state.trendArrow())")
+                            Image(systemName: "drop.fill")
+                                .renderingMode(.template)
+                                .font(.system(size: 24))//.fontWeight(.bold)
+                                .foregroundStyle(context.state.bgTextColor())
+                            Text(context.state.bgValueStringInUserChosenUnit)
                                 .font(.system(size: 32)).fontWeight(.bold)
                                 .foregroundStyle(context.state.bgTextColor())
                                 .scaledToFill()
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
+                                .baselineOffset(2)
                             
                             Spacer()
                             
                             HStack(alignment: .firstTextBaseline, spacing: 4) {
-                                Text(context.state.deltaChangeStringInUserChosenUnit())
-                                    .font(.system(size: 28)).fontWeight(.semibold)
+                                Text(context.state.trendArrow())
+                                    .font(.system(size: 32)).fontWeight(.semibold)
                                     .foregroundStyle(context.state.bgTextColor())
                                     .lineLimit(1)
+                                Text(context.state.deltaChangeStringInUserChosenUnit())
+                                    .font(.system(size: 32)).fontWeight(.semibold)
+                                    .foregroundStyle(context.state.bgTextColor())
+                                    .lineLimit(1)
+                                    .baselineOffset(2)
+                                /*
                                 Text(context.state.bgUnitString)
                                     .font(.system(size: 28))
                                     .foregroundStyle(context.state.bgTextColor())
                                     .lineLimit(1)
+                                */
                             }
                         }
                         .padding(.top, 8)
@@ -254,26 +266,45 @@ struct XDripWidgetLiveActivity: Widget {
             
         } dynamicIsland: { context in
             DynamicIsland {
-                DynamicIslandExpandedRegion(.leading) {                    Text("\(context.state.bgValueStringInUserChosenUnit)\(context.state.trendArrow())")
-                        .font(.largeTitle).bold()
-                        .foregroundStyle(context.state.bgTextColor())
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                        .minimumScaleFactor(0.1)
-                        .lineLimit(1)
+                DynamicIslandExpandedRegion(.leading) {
+                    HStack {
+                        Image(systemName: "drop.fill")
+                            .renderingMode(.template)
+                            .foregroundStyle(context.state.bgTextColor())
+                            .font(.title2)
+                            .minimumScaleFactor(0.2)
+                            .lineLimit(1)
+                        Text(context.state.bgValueStringInUserChosenUnit)
+                            .font(.title).bold()
+                            .foregroundStyle(context.state.bgTextColor())
+                        //.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                            .minimumScaleFactor(0.2)
+                            .lineLimit(1)
+                            .baselineOffset(3)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     HStack(alignment: .firstTextBaseline, spacing: 4) {
+                        Text(context.state.trendArrow())
+                            .font(.title).fontWeight(.semibold)
+                            .foregroundStyle(context.state.bgTextColor())
+                            .minimumScaleFactor(0.2)
+                            .lineLimit(1)
                         Text(context.state.deltaChangeStringInUserChosenUnit())
                             .font(.title).fontWeight(.semibold)
                             .foregroundStyle(context.state.bgTextColor())
                             .minimumScaleFactor(0.2)
                             .lineLimit(1)
-                        
+                            .baselineOffset(3)
+                            //.baselineOffset(2)
+                        /*
                         Text(context.state.bgUnitString)
                             .font(.title)
                             .foregroundStyle(context.state.bgTextColor())
                             .minimumScaleFactor(0.2)
                             .lineLimit(1)
+                        */
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 }
@@ -285,6 +316,7 @@ struct XDripWidgetLiveActivity: Widget {
                     Image(systemName: "drop.fill")
                         .renderingMode(.template)
                         .foregroundStyle(context.state.bgTextColor())
+                        .baselineOffset(-2)
                     Text("\(context.state.bgValueStringInUserChosenUnit)")
                         .foregroundStyle(context.state.bgTextColor())
                         .minimumScaleFactor(0.1)

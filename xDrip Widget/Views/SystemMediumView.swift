@@ -12,25 +12,32 @@ import SwiftUI
 extension XDripWidget.EntryView {
     var systemMediumView: some View {
         VStack(spacing: 0) {
-            HStack(alignment: .center) {
-                Text("\(entry.widgetState.bgValueStringInUserChosenUnit) \(entry.widgetState.trendArrow())")
+            HStack(alignment: .center, spacing: 2) {
+                Image(systemName: "drop.fill")
+                    .renderingMode(.template)
+                    .foregroundStyle(entry.widgetState.bgTextColor())
+                    .font(.title2)
+                Text("\(entry.widgetState.bgValueStringInUserChosenUnit)")
                     .font(.title).fontWeight(.bold)
                     .foregroundStyle(entry.widgetState.bgTextColor())
                     .scaledToFill()
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
+                    .baselineOffset(3)
+                    //.padding(.trailing, -5)
                 
                 Spacer()
                 
                 HStack(alignment: .firstTextBaseline, spacing: 4) {
+                    Text(entry.widgetState.trendArrow())
+                        .font(.title2).fontWeight(.semibold)
+                        .foregroundStyle(entry.widgetState.bgTextColor())
+                        .lineLimit(1)
                     Text(entry.widgetState.deltaChangeStringInUserChosenUnit())
                         .font(.title2).fontWeight(.semibold)
                         .foregroundStyle(entry.widgetState.bgTextColor())
                         .lineLimit(1)
-                    Text(entry.widgetState.bgUnitString)
-                        .font(.title2)
-                        .foregroundStyle(entry.widgetState.bgTextColor())
-                        .lineLimit(1)
+                        .baselineOffset(3)
                 }
             }
             .padding(.top, -6)
