@@ -83,7 +83,7 @@ public class BgReading: NSManagedObject {
         } else if (slope_by_minute <= (3.5)) {
             return "\u{2191}" // ↑
         } else {
-            return "\u{2191}\u{2191}" // ↑↑
+            return "\u{2191}" // ↑ Auggie - text space\u{2191}" // ↑↑
         }
     }
     

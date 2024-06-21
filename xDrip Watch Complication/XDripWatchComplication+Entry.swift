@@ -105,7 +105,7 @@ extension XDripWatchComplication.Entry {
             case 2:
                 return "\u{2191}" // ↑
             case 1:
-                return "\u{2191}\u{2191}" // ↑↑
+                return "\u{2191}" // ↑ Auggie - text space\u{2191}" // ↑↑
             default:
                 return ""
             }
