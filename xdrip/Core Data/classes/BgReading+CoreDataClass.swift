@@ -249,7 +249,8 @@ public class BgReading: NSManagedObject {
         let slope_by_minute:Double = calculatedValueSlope * 60000
         var arrow = "NONE"
         if (slope_by_minute <= (-3.5)) {
-            arrow = "DoubleDown" // ↓↓
+            //arrow = "DoubleDown" // ↓↓
+            arrow = "SingleDown" // ↓ use single down for more real estate, and G7 bounciness
         } else if (slope_by_minute <= (-2)) {
             arrow = "SingleDown" // ↓
         } else if (slope_by_minute <= (-1)) {
@@ -261,7 +262,8 @@ public class BgReading: NSManagedObject {
         } else if (slope_by_minute <= (3.5)) {
             arrow = "SingleUp" // ↑
         } else if (slope_by_minute <= (40)) {
-            arrow = "DoubleUp" // ↑↑
+            //arrow = "DoubleUp" // ↑↑
+            arrow = "SingleUp" // ↑ use single up for more real estate, and G7 bounciness
         }
         
         if(hideSlope) {
