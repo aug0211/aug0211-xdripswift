@@ -154,6 +154,9 @@ class LibreNFC: NSObject, NFCTagReaderSessionDelegate {
             let blocks = 43
             let requestBlocks = 3
             
+            
+            //Auggie - deleted a ton of code here to get this to compile
+            /*
             let requests = Int(ceil(Double(blocks) / Double(requestBlocks)))
             let remainder = blocks % requestBlocks
             var dataArray = [Data](repeating: Data(), count: blocks)
@@ -503,6 +506,7 @@ class LibreNFC: NSObject, NFCTagReaderSessionDelegate {
                     }
                 }
             }
+        */
         }
     }
     
